@@ -1,0 +1,36 @@
+@(folks:Map[String, Seq[controllers.Application.One]])(implicit request:RequestHeader)
+
+@import helper._
+
+@main("Please vote for me...") {
+  @folks.map { case (p, list) =>
+    <div id="partite-@p" class="p">
+      <p style="background-color:lightblue; width:200px">@p</p>
+      <div style="display:none">
+        @form(action = routes.Application.vote) {
+          <input type="hidden" name="p" value="@p" />
+          @list.map { item =>
+            <p>
+              <input type="checkbox" name="ones" value="@{item.name}" />@item.name
+            </p>
+          }
+          <input type="submit" value="Vote" />
+        }
+      </div>
+    </div>
+  }
+}
+
+<script>
+  $(function() {
+    // love that crap?
+    var chooseP = function (evt) {
+      var me = $(evt.currentTarget);
+      var p = me.parents("div.p");
+      $(".p").hide();
+      p.show();
+      p.find("div").show();
+    };
+    $(".p p").click(chooseP);
+  });
+</script>

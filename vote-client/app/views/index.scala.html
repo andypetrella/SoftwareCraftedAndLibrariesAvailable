@@ -1,0 +1,12 @@
+@(title: String, countries:Map[String, String], voter:Form[controllers.Application.Voter])
+
+@import helper._
+
+@main(title) {
+
+    @form(action = routes.Application.voteUI) {
+      @select(voter("country"), countries.toSeq)
+      @inputText(voter("id"))
+    }
+
+}
